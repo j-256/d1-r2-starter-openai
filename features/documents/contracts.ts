@@ -1,9 +1,11 @@
 import type { ObjectStore } from "../../platform/object-store.ts";
 
+const MEBIBYTE_BYTES = 1024 * 1024;
+
 export const DOCUMENT_LIMITS = Object.freeze({
     contentTypeCharacters: 200,
     descriptionCharacters: 500,
-    fileBytes: 5 * 1024 * 1024,
+    fileBytes: 5 * MEBIBYTE_BYTES,
     idCharacters: 64,
     listItems: 50,
     nameCharacters: 200,
