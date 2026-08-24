@@ -1,8 +1,8 @@
-# D1 + R2 starter for OpenAI Sites
+# D1 + R2 starter for ChatGPT Sites
 
 Start with a working D1 + R2 feature you can understand, run, and reshape.
 
-This TypeScript starter pairs queryable metadata in [Cloudflare D1](https://developers.cloudflare.com/d1/) with binary file content in [Cloudflare R2](https://developers.cloudflare.com/r2/). Its document library is a thin but real example: upload, search, download, and delete files through one tested feature boundary, then keep it or replace it with your own data model. Built with [Vinext](https://github.com/cloudflare/vinext) for [OpenAI Sites](https://learn.chatgpt.com/docs/sites).
+This TypeScript starter pairs queryable metadata in [Cloudflare D1](https://developers.cloudflare.com/d1/) with binary file content in [Cloudflare R2](https://developers.cloudflare.com/r2/). Its document library is a thin but real example: upload, search, download, and delete files through one tested feature boundary, then keep it or replace it with your own data model. Built with [Vinext](https://github.com/cloudflare/vinext) for [ChatGPT Sites](https://learn.chatgpt.com/docs/sites).
 
 The platform shell is data-model-neutral. `features/documents/` is the deliberately concrete example that shows how D1 and R2 work together.
 
@@ -20,7 +20,7 @@ Prefer a direct Cloudflare Worker managed with Wrangler? The [Wrangler + Hono ed
 
 ## Quickstart
 
-This edition is wired for OpenAI Sites. For local iteration:
+This edition is wired for ChatGPT Sites. For local iteration:
 
 ```bash
 npm ci
@@ -156,7 +156,7 @@ MIT. See `LICENSE`.
 
 ## Learn more
 
-- [OpenAI Sites documentation](https://learn.chatgpt.com/docs/sites)
+- [ChatGPT Sites documentation](https://learn.chatgpt.com/docs/sites)
 - [Vinext](https://github.com/cloudflare/vinext)
 - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - [Cloudflare R2](https://developers.cloudflare.com/r2/)
