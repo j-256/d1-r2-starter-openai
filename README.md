@@ -115,9 +115,9 @@ Sites publishing has two stages: save a reviewable version, then deploy an appro
 
 The reusable template's `.openai/hosting.json` declares `DB` and `BUCKET` without a `project_id`. Sites adds the project ID after it provisions the hosted project.
 
-`install:ci` performs one bounded `npm ci` and refuses a concurrent install for the same project. When `SITES_NPM_CACHE_SEED` points to a matching seeded cache, it restores that cache and retains registry fallback. `build` runs a bounded Vinext build and validates the Worker entry point, hosting manifest, and packaged migration.
+`install:ci` is the Linux Sites-build installer. It performs one bounded `npm ci` and refuses a concurrent install for the same project. When `SITES_NPM_CACHE_SEED` points to a matching seeded cache, it restores that cache and retains registry fallback. Local development does not need that specialized installer; use `npm ci` on macOS or Linux.
 
-Those helpers target Linux and use `flock` and GNU `timeout`. Their `SITES_INSTALL_TIMEOUT`, `SITES_INSTALL_KILL_AFTER`, `SITES_BUILD_TIMEOUT`, and `SITES_BUILD_KILL_AFTER` variables configure the repository scripts, not the Sites platform.
+`build` runs a bounded Vinext build and validates the Worker entry point, hosting manifest, and packaged migration. It works on macOS and Linux when GNU `timeout` is available. The Linux-only `install:ci` additionally uses `flock`, `curl`, `sha256sum`, and `/proc`. The `SITES_INSTALL_TIMEOUT`, `SITES_INSTALL_KILL_AFTER`, `SITES_BUILD_TIMEOUT`, and `SITES_BUILD_KILL_AFTER` variables configure the repository scripts, not the Sites platform.
 
 ## Optional Sites-managed Sign in with ChatGPT
 
@@ -133,7 +133,7 @@ Use the Site's audience controls for workspace restrictions, or enforce an expli
 
 ## Commands
 
-- `npm run install:ci`: perform the bounded lockfile install used by Sites builds
+- `npm run install:ci`: perform the Linux-only bounded lockfile install used by Sites builds
 - `npm run dev`: start the Vite/Vinext development server
 - `npm run build`: typecheck, build, and validate the Sites artifact
 - `npm run start`: start the built Vinext application
@@ -147,7 +147,8 @@ Use the Site's audience controls for workspace restrictions, or enforce an expli
 ## Prerequisites
 
 - Node.js `>=22.13.0`
-- Linux with `flock`, `curl`, and GNU `timeout` for the Sites build helpers
+- GNU `timeout` for the bounded verified build; on macOS it is available from GNU coreutils
+- Linux with `flock`, `curl`, `sha256sum`, and `/proc` only when running the Sites `install:ci` helper outside its build environment
 
 ## License
 
