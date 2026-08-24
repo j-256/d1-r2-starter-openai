@@ -1,23 +1,18 @@
-/** Cloudflare Worker composition root for the Vinext application. */
 import {
     DEFAULT_DEVICE_SIZES,
     DEFAULT_IMAGE_SIZES,
     handleImageOptimization,
 } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
-import { runWithRequestContext } from "../runtime/storage-context";
-import type { Authorizer } from "../storage/authorizer";
-import {
-    createStorageServices,
-    type RuntimeStorageBindings,
-} from "../storage/create-services";
+import { runWithAppContext } from "../app-context.ts";
+import { createAppServices } from "../app-services.ts";
+import type { Authorizer } from "../platform/authorizer.ts";
+import type { RuntimeBindings } from "../platform/cloudflare-bindings.ts";
 
 /**
- * Authorization for THIS (hosted) variant is enforced by the Sites access
- * policy in front of the Worker; this authorizer trusts that upstream layer
- * and allows every request that reaches the Worker. A self-hosted deployment
- * (e.g. the Wrangler variant) MUST replace this with a real check, such as a
- * shared-secret or bearer-token authorizer reading from an env binding.
+ * Sites enforces authorization upstream with its audience policy, so this
+ * authorizer allows every request that reaches the Worker; self-hosted
+ * deployments must inject an application-level authorizer
  */
 const platformTrustAuthorizer: Authorizer = {
     async authorize() {
@@ -44,7 +39,7 @@ interface ImageBinding {
     input(stream: ReadableStream): ImageInput;
 }
 
-interface Env extends RuntimeStorageBindings {
+interface Env extends RuntimeBindings {
     ASSETS: AssetFetcher;
     IMAGES: ImageBinding;
 }
@@ -89,8 +84,8 @@ const worker = {
             );
         }
 
-        const services = createStorageServices(env);
-        return runWithRequestContext(
+        const services = createAppServices(env);
+        return runWithAppContext(
             { authorizer: platformTrustAuthorizer, services },
             () => handler.fetch(request, env, ctx)
         );

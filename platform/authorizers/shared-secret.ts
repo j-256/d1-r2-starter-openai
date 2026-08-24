@@ -7,7 +7,6 @@ const DENIED: AuthResult = {
     error: "A valid bearer secret is required.",
 };
 
-/** Constant-time string comparison; returns false immediately on length mismatch */
 function timingSafeEqual(left: string, right: string): boolean {
     if (left.length !== right.length) return false;
     let mismatch = 0;
@@ -17,13 +16,6 @@ function timingSafeEqual(left: string, right: string): boolean {
     return mismatch === 0;
 }
 
-/**
- * Builds an Authorizer that accepts requests carrying
- * `authorization: Bearer <expectedSecret>`. Platform-neutral: it takes the
- * already-resolved secret string and reads no env. Fails closed when the
- * expected secret is empty, so a deployment that forgot to set a secret
- * denies everything rather than allowing all
- */
 export function sharedSecretAuthorizer(expectedSecret: string): Authorizer {
     return {
         async authorize(request: Request): Promise<AuthResult> {

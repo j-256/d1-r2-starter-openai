@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { sharedSecretAuthorizer } from "../storage/authorizers/shared-secret.ts";
+import { sharedSecretAuthorizer } from "../platform/authorizers/shared-secret.ts";
 
 const SECRET = "s3cr3t-value";
 
 function requestWith(headerValue?: string): Request {
     const headers = new Headers();
     if (headerValue !== undefined) headers.set("authorization", headerValue);
-    return new Request("http://localhost/api/d1", { headers });
+    return new Request("http://localhost/api/documents", { headers });
 }
 
 test("allows a request with the correct bearer secret", async () => {
@@ -44,7 +44,7 @@ test("fails closed when the expected secret is empty", async () => {
     if (!result.ok) assert.equal(result.status, 401);
 });
 
-test("denies when presented secret differs in length (constant-time guard)", async () => {
+test("denies a presented secret with a different length", async () => {
     const auth = sharedSecretAuthorizer(SECRET);
     const result = await auth.authorize(requestWith("Bearer short"));
     assert.equal(result.ok, false);

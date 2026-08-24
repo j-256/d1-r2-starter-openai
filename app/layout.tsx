@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Starter",
-  description: "A private Cloudflare D1 and R2 storage control plane.",
+  title: "D1 + R2 Document Library",
+  description: "A replaceable document example built with Cloudflare D1 and R2.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

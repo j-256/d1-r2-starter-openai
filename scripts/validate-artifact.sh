@@ -11,8 +11,7 @@ worker="${SITES_PROJECT_ROOT}/dist/server/index.js"
 hosting="${SITES_PROJECT_ROOT}/dist/.openai/hosting.json"
 migration_root="${SITES_PROJECT_ROOT}/dist/.openai/drizzle"
 required_migrations=(
-  "0000_complex_thena.sql"
-  "0001_add-content-type-demo.sql"
+  "0000_create-documents.sql"
   "meta/_journal.json"
 )
 
