@@ -473,7 +473,7 @@ export default function Home() {
                         </div>
 
                         <form className="search-form" onSubmit={search} role="search">
-                            <label htmlFor="document-search">Search filenames</label>
+                            <label htmlFor="document-search">Search names and descriptions</label>
                             <div className="search-row">
                                 <input
                                     disabled={busy}

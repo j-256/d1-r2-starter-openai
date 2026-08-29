@@ -93,6 +93,7 @@ export class D1DocumentRepository implements DocumentRepository {
                 .prepare(
                     `${SELECT_COLUMNS}
                      WHERE name LIKE ?1 ESCAPE '!'
+                        OR description LIKE ?1 ESCAPE '!'
                      ORDER BY created_at DESC, id ASC
                      LIMIT ?2`
                 )

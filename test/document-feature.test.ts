@@ -205,7 +205,7 @@ test("document download reports metadata without an R2 object", async () => {
     );
 });
 
-test("D1 repository stores typed metadata and escapes filename search", async () => {
+test("D1 repository stores typed metadata and escapes metadata search", async () => {
     const database = new TestSqlDatabase();
     const migration = await readFile(
         new URL("../drizzle/0000_create-documents.sql", import.meta.url),
@@ -237,6 +237,7 @@ test("D1 repository stores typed metadata and escapes filename search", async ()
 
     assert.deepEqual(await repository.list("", 50), records);
     assert.deepEqual(await repository.list("%", 50), [newer]);
+    assert.deepEqual(await repository.list("comparison", 50), [older]);
     assert.deepEqual(await repository.find("older"), older);
     await repository.delete("older");
     assert.equal(await repository.find("older"), null);
